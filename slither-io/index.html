@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Slither.io Clone - Loonride Example</title>
+    <!--<script src="lib/phaser.min.js"></script>-->
+    <script src="lib/phaser.js"></script>
+    <script src="src/game.js"></script>
+    <script src="src/snake.js"></script>
+    <script src="src/playerSnake.js"></script>
+    <script src="src/aiSnake.js"></script>
+    <script src="src/botSnake.js"></script>
+    <script src="src/eye.js"></script>
+    <script src="src/eyePair.js"></script>
+    <script src="src/shadow.js"></script>
+    <script src="src/food.js"></script>
+    <script src="src/util.js"></script>
+</head>
+<body>
+    <style>
+        #gameStats {
+            display: none;
+        }
+    </style>
+    <script>
+        window.isGamePaused = true;
+        window.targetX = 300;
+        window.targetY = 100;
+        var game;
+    (function() {
+        game = new Phaser.Game(800, 500, Phaser.AUTO, null);
+
+        game.state.add('Game', Game);
+        game.state.start('Game');
+    })();
+
+        function getGameStats() {
+            var gameStats = new Object();
+            var gameSnakes = new Array();
+            // console.log(game.snakes);
+            for (var i = 0; i < game.snakes.length; i++) {
+                var gameSnake = new Object();
+                // console.log(game.snakes[i].head.rotation);
+                // console.log(game.snakes[i].headPath);
+                gameSnake.headRotation = game.snakes[i].head.rotation;
+                gameSnake.headPosition = game.snakes[i].head.position;
+                gameSnake.headPath = game.snakes[i].headPath;
+                gameSnakes.push(gameSnake);
+            }
+
+            gameStats.snakes = gameSnakes;
+            // console.log(JSON.stringify(gameStats));
+            document.getElementById('gameStats').innerHTML = JSON.stringify(gameStats);
+        }
+    </script>
+    <div id="gameStats">
+
+    </div>
+    <div id="debug">
+
+    </div>
+</body>
+</html>
