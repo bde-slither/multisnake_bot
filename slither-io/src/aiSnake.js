@@ -5,8 +5,8 @@
  * @param  {Number} x         coordinate
  * @param  {Number} y         coordinate
  */
-AiSnake = function(game, spriteKey, x, y) {
-    Snake.call(this, game, spriteKey, x, y);
+AiSnake = function(game, spriteKey, x, y, id) {
+    Snake.call(this, game, spriteKey, x, y, id);
     this.cursors = game.input.keyboard.createCursorKeys();
 
     //handle the space key so that the player's snake can speed up
@@ -44,11 +44,20 @@ AiSnake.prototype.update = function() {
     //through in order to face the mouse
     // var mousePosX = this.game.input.activePointer.worldX;
     // var mousePosY = this.game.input.activePointer.worldY;
+    // var mousePosX = window.targetX;
+    // var mousePosY = window.targetY;
     var mousePosX = window.targetX;
     var mousePosY = window.targetY;
+    
+    if (window.targetPositions) {
+        mousePosX = window.targetPositions[this.id][0];
+        mousePosY = window.targetPositions[this.id][1];
+    }
+
     var headX = this.head.body.x;
     var headY = this.head.body.y;
     var angle = (180*Math.atan2(mousePosX-headX,mousePosY-headY)/Math.PI);
+    //console.log(mousePosX + " " + mousePosY + " " + angle);
     if (angle > 0) {
         angle = 180-angle;
     }

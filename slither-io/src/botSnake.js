@@ -5,8 +5,8 @@
  * @param  {Number} x         coordinate
  * @param  {Number} y         coordinate
  */
-BotSnake = function(game, spriteKey, x, y) {
-    Snake.call(this, game, spriteKey, x, y);
+BotSnake = function(game, spriteKey, x, y, id) {
+    Snake.call(this, game, spriteKey, x, y, id);
     this.trend = 1;
 }
 

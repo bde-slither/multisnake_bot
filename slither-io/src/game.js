@@ -39,8 +39,9 @@ Game.prototype = {
 
         //create player
         // var snake = new PlayerSnake(this.game, 'circle', 0, 0);
-        var snake = new AiSnake(this.game, 'circle', 0, 0);
-        this.game.camera.follow(snake.head);
+        var snake1 = new AiSnake(this.game, 'circle', -300, 0, 0);
+        var snake2 = new AiSnake(this.game, 'circle', 300, -100, 1);
+        this.game.camera.follow(snake1.head);
 
         //create bots
         // new BotSnake(this.game, 'circle', -200, 0);

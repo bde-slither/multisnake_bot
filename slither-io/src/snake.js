@@ -4,15 +4,17 @@
  * @param  {String} spriteKey Phaser sprite key
  * @param  {Number} x         coordinate
  * @param  {Number} y         coordinate
+ * @param  {Number} id        snake id
  */
-Snake = function(game, spriteKey, x, y) {
+Snake = function(game, spriteKey, x, y, id) {
     this.game = game;
+    this.id = id;
     //create an array of snakes in the game object and add this snake
     if (!this.game.snakes) {
         this.game.snakes = [];
     }
     this.game.snakes.push(this);
-    this.debug = true;
+    this.debug = false;
     this.snakeLength = 0;
     this.spriteKey = spriteKey;
 
@@ -103,6 +105,7 @@ Snake.prototype = {
         sec.body.kinematic = true;
 
         this.snakeLength++;
+        // alert(this.snakeLength);
         this.sectionGroup.add(sec);
         sec.sendToBack();
         sec.scale.setTo(this.scale);

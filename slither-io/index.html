@@ -18,15 +18,19 @@
 </head>
 <body>
     <style>
+        /*
         #gameStats {
             display: none;
         }
+        */
     </style>
     <script>
+        window.targetPositions = undefined;
         window.isGamePaused = true;
-        window.targetX = 300;
-        window.targetY = 100;
+        window.targetX = -700;
+        window.targetY = 500;
         var game;
+        var gameStats = null;
     (function() {
         game = new Phaser.Game(800, 500, Phaser.AUTO, null);
 
@@ -34,25 +38,64 @@
         game.state.start('Game');
     })();
 
-        function getGameStats() {
-            var gameStats = new Object();
+    function getGameStats() {
+        if (!gameStats) {
+            gameStats = new Object();
             var gameSnakes = new Array();
             // console.log(game.snakes);
             for (var i = 0; i < game.snakes.length; i++) {
                 var gameSnake = new Object();
                 // console.log(game.snakes[i].head.rotation);
                 // console.log(game.snakes[i].headPath);
-                gameSnake.headRotation = game.snakes[i].head.rotation;
-                gameSnake.headPosition = game.snakes[i].head.position;
+                gameSnake.id = game.snakes[i].id;
+                gameSnake.angle = game.snakes[i].head.body.angle;
+                gameSnake.x = game.snakes[i].head.body.x;
+                gameSnake.y = game.snakes[i].head.body.y;
+                gameSnake.score = game.snakes[i].snakeLength;
+                gameSnake.reward = game.snakes[i].snakeLength;
+                gameSnake.isAlive = true;
                 gameSnake.headPath = game.snakes[i].headPath;
                 gameSnakes.push(gameSnake);
             }
+            
+                gameStats.snakes = gameSnakes;
+                gameStats.done = false;
+                gameStats.reward = game.snakes.length;
+        } else {
+            for (var k = 0; k < gameStats.snakes.length; k++) {
+                var i = 0;
+                for (i = 0; i < game.snakes.length; i++) {
+                    if (gameStats.snakes[k].id === game.snakes[i].id) {
+                        gameStats.snakes[k].angle = game.snakes[i].head.body.angle;
+                        gameStats.snakes[k].x = game.snakes[i].head.body.x;
+                        gameStats.snakes[k].y = game.snakes[i].head.body.y;
+                        gameStats.snakes[k].score = game.snakes[i].snakeLength;
+                        gameStats.snakes[k].reward = game.snakes[i].snakeLength - gameStats.snakes[k].reward;
+                        gameStats.snakes[k].isAlive = true;
+                        gameStats.snakes[k].headPath = game.snakes[i].headPath;
+                        break;
+                    }
+                }
 
-            gameStats.snakes = gameSnakes;
-            // console.log(JSON.stringify(gameStats));
-            document.getElementById('gameStats').innerHTML = JSON.stringify(gameStats);
+                if (i === game.snakes.length) {
+                    gameStats.snakes[k].isAlive = false;
+                }
+            }
+
+            gameStats.done = false;
+            gameStats.reward = game.snakes.length;
+            gameStats.targetPositions = window.targetPositions;
         }
+
+        document.getElementById('gameStats').innerHTML = JSON.stringify(gameStats);
+        //document.getElementById('gamePos').innerHTML = JSON.stringify(gameStats.snakes[0].position) + " rotation: " + JSON.stringify(gameStats.snakes[0].angle) + " input x: " + this.game.input.activePointer.worldX + " input y: " + this.game.input.activePointer.worldY;
+    }
+
+    setInterval(getGameStats, 2000);
     </script>
+    <div id="gamePos">
+
+    </div>
     <div id="gameStats">
 
     </div>

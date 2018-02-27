@@ -101,10 +101,10 @@ Eye.prototype = {
      * Call from the update loop
      */
     update: function() {
-        // var mousePosX = this.game.input.activePointer.worldX;
-        // var mousePosY = this.game.input.activePointer.worldY;
-        var mousePosX = window.targetX;
-        var mousePosY = window.targetY;
+        var mousePosX = this.game.input.activePointer.worldX;
+        var mousePosY = this.game.input.activePointer.worldY;
+        //var mousePosX = window.targetX;
+        //var mousePosY = window.targetY;
         var headX = this.head.body.x;
         var headY = this.head.body.y;
         var angle = Math.atan2(mousePosY-headY, mousePosX-headX);

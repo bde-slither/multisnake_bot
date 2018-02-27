@@ -5,8 +5,8 @@
  * @param  {Number} x         coordinate
  * @param  {Number} y         coordinate
  */
-PlayerSnake = function(game, spriteKey, x, y) {
-    Snake.call(this, game, spriteKey, x, y);
+PlayerSnake = function(game, spriteKey, x, y, id) {
+    Snake.call(this, game, spriteKey, x, y, id);
     this.cursors = game.input.keyboard.createCursorKeys();
 
     //handle the space key so that the player's snake can speed up
