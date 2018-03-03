@@ -16,8 +16,11 @@ Game.prototype = {
     create: function() {
         var width = this.game.width;
         var height = this.game.height;
+        this.game.foodCount = 0;
 
-        this.game.world.setBounds(-width, -height, width*2, height*2);
+        // this.game.world.setBounds(-width, -height, width*2, height*2);
+        
+        this.game.world.setBounds(-width, -height, width, height);
     	this.game.stage.backgroundColor = '#444';
 
         //add tilesprite background
@@ -38,9 +41,9 @@ Game.prototype = {
         this.game.snakes = [];
 
         //create player
-        // var snake = new PlayerSnake(this.game, 'circle', 0, 0);
-        var snake1 = new AiSnake(this.game, 'circle', -300, 0, 0);
-        var snake2 = new AiSnake(this.game, 'circle', 300, -100, 1);
+        // var snake1 = new PlayerSnake(this.game, 'circle', 0, 0);
+        var snake1 = new AiSnake(this.game, 'circle', -400, -250, 0);
+        //var snake2 = new AiSnake(this.game, 'circle', 300, -100, 1);
         this.game.camera.follow(snake1.head);
 
         //create bots
@@ -64,10 +67,13 @@ Game.prototype = {
         for (var i = this.game.snakes.length - 1 ; i >= 0 ; i--) {
             this.game.snakes[i].update();
         }
+
         for (var i = this.foodGroup.children.length - 1 ; i >= 0 ; i--) {
             var f = this.foodGroup.children[i];
             f.food.update();
         }
+
+        this.game.foodCount = this.foodGroup.children.length;
     },
     /**
      * Create a piece of food at a point

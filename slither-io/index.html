@@ -18,17 +18,17 @@
 </head>
 <body>
     <style>
-        /*
-        #gameStats {
+        
+       #gameStats {
             display: none;
-        }
-        */
+       }
+        
     </style>
     <script>
         window.targetPositions = undefined;
         window.isGamePaused = true;
-        window.targetX = -700;
-        window.targetY = 500;
+        window.targetX = -400;
+        window.targetY = -250;
         var game;
         var gameStats = null;
     (function() {
@@ -43,6 +43,8 @@
             gameStats = new Object();
             var gameSnakes = new Array();
             // console.log(game.snakes);
+            console.log(game);
+            console.log(game.snakes);
             for (var i = 0; i < game.snakes.length; i++) {
                 var gameSnake = new Object();
                 // console.log(game.snakes[i].head.rotation);
@@ -52,7 +54,8 @@
                 gameSnake.x = game.snakes[i].head.body.x;
                 gameSnake.y = game.snakes[i].head.body.y;
                 gameSnake.score = game.snakes[i].snakeLength;
-                gameSnake.reward = game.snakes[i].snakeLength;
+                gameSnake.length = game.snakes[i].snakeLength;
+                gameSnake.reward = 0;
                 gameSnake.isAlive = true;
                 gameSnake.headPath = game.snakes[i].headPath;
                 gameSnakes.push(gameSnake);
@@ -70,7 +73,8 @@
                         gameStats.snakes[k].x = game.snakes[i].head.body.x;
                         gameStats.snakes[k].y = game.snakes[i].head.body.y;
                         gameStats.snakes[k].score = game.snakes[i].snakeLength;
-                        gameStats.snakes[k].reward = game.snakes[i].snakeLength - gameStats.snakes[k].reward;
+                        gameStats.snakes[k].reward = game.snakes[i].snakeLength - gameStats.snakes[k].length;
+                        gameStats.snakes[k].length = game.snakes[i].snakeLength;
                         gameStats.snakes[k].isAlive = true;
                         gameStats.snakes[k].headPath = game.snakes[i].headPath;
                         break;
@@ -82,17 +86,25 @@
                 }
             }
 
-            gameStats.done = false;
-            gameStats.reward = game.snakes.length;
+            gameStats.done = game.foodCount == 0;
+            gameStats.reward = (game && gameStats.snakes && gameStats.snakes[0]) ? gameStats.snakes[0].reward : 0;
             gameStats.targetPositions = window.targetPositions;
         }
 
         document.getElementById('gameStats').innerHTML = JSON.stringify(gameStats);
+        document.getElementById('score').innerHTML = gameStats && gameStats.snakes ? (gameStats && gameStats.snakes[0].score) : '0';
+        document.getElementById('reward').innerHTML = gameStats && gameStats.snakes ? (gameStats && gameStats.snakes[0].reward) : '0';
         //document.getElementById('gamePos').innerHTML = JSON.stringify(gameStats.snakes[0].position) + " rotation: " + JSON.stringify(gameStats.snakes[0].angle) + " input x: " + this.game.input.activePointer.worldX + " input y: " + this.game.input.activePointer.worldY;
     }
 
     setInterval(getGameStats, 2000);
     </script>
+    <div id="score">
+
+    </div>
+    <div id="reward">
+
+    </div>
     <div id="gamePos">
 
     </div>

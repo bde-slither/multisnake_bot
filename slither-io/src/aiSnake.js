@@ -44,15 +44,24 @@ AiSnake.prototype.update = function() {
     //through in order to face the mouse
     // var mousePosX = this.game.input.activePointer.worldX;
     // var mousePosY = this.game.input.activePointer.worldY;
-    // var mousePosX = window.targetX;
-    // var mousePosY = window.targetY;
     var mousePosX = window.targetX;
     var mousePosY = window.targetY;
-    
+    //ar mousePosX, mousePosY =;
     if (window.targetPositions) {
         mousePosX = window.targetPositions[this.id][0];
         mousePosY = window.targetPositions[this.id][1];
     }
+
+    /*
+    if (mousePosX > 0)
+        mousePosX = 0;
+    if (mousePosY > 0)
+        mousePosY = 0;
+    if (mousePosX < -this.game.width)
+        mousePosX = -this.game.width;
+    if (mousePosY < -this.game.height)
+        mousePosY = -this.game.height;
+    */
 
     var headX = this.head.body.x;
     var headY = this.head.body.y;
