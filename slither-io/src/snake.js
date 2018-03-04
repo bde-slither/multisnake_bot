@@ -24,9 +24,10 @@ Snake = function(game, spriteKey, x, y, id) {
     this.fastSpeed = 300;
     this.slowSpeed = 130;
     // this.speed = this.slowSpeed;
-    this.speed = this.fastSpeed;
+
+    this.speed = window.snakeSpeed;
     // this.rotationSpeed = 40;
-    this.rotationSpeed = 80;
+    this.rotationSpeed = 100;
 
     //initialize groups and arrays
     this.collisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -131,7 +132,8 @@ Snake.prototype = {
      * Call from the main update loop
      */
     update: function() {
-        var speed = this.speed;
+        // var speed = this.speed;
+        var speed = window.snakeSpeed;
         this.head.body.moveForward(speed);
 
         //remove the last element of an array that contains points which

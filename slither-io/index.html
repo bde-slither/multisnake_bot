@@ -39,6 +39,7 @@
         var gameStats = null;
         var lenSnake = 0;
         var initialSnakeLen = 6;
+        window.snakeSpeed = 20;
     (function() {
         game = new Phaser.Game(700, 400, Phaser.AUTO, null);
 
@@ -46,33 +47,39 @@
         game.state.start('Game');
     })();
 
+    function setNormalSpeed() {
+        window.snakeSpeed = 300;
+    }
+
     function getGameStats() {
-        if (!gameStats) {
-            gameStats = new Object();
-            var gameSnakes = new Array();
-            // console.log(game.snakes);
-            console.log(game);
-            console.log(game.snakes);
-            for (var i = 0; i < game.snakes.length; i++) {
-                var gameSnake = new Object();
-                // console.log(game.snakes[i].head.rotation);
-                // console.log(game.snakes[i].headPath);
-                gameSnake.id = game.snakes[i].id;
-                gameSnake.angle = game.snakes[i].head.body.angle;
-                gameSnake.x = game.snakes[i].head.body.x;
-                gameSnake.y = game.snakes[i].head.body.y;
-                gameSnake.score = game.snakes[i].snakeLength - initialSnakeLen;
-                gameSnake.length = game.snakes[i].snakeLength - initialSnakeLen;
-                gameSnake.reward = 0;
-                gameSnake.isAlive = true;
-                gameSnake.headPath = game.snakes[i].headPath;
-                gameSnakes.push(gameSnake);
-                lenSnake = game.snakes[i].snakeLength - initialSnakeLen;
-            }
-            
+        if (!gameStats || !gameStats.snakes) {
+            if (game && game.snakes) {
+                gameStats = new Object();
+                var gameSnakes = new Array();
+                // console.log(game.snakes);
+                console.log(game);
+                console.log(game.snakes);
+                for (var i = 0; i < game.snakes.length; i++) {
+                    var gameSnake = new Object();
+                    // console.log(game.snakes[i].head.rotation);
+                    // console.log(game.snakes[i].headPath);
+                    gameSnake.id = game.snakes[i].id;
+                    gameSnake.angle = game.snakes[i].head.body.angle;
+                    gameSnake.x = game.snakes[i].head.body.x;
+                    gameSnake.y = game.snakes[i].head.body.y;
+                    gameSnake.score = game.snakes[i].snakeLength - initialSnakeLen;
+                    gameSnake.length = game.snakes[i].snakeLength - initialSnakeLen;
+                    gameSnake.reward = 0;
+                    gameSnake.isAlive = true;
+                    gameSnake.headPath = game.snakes[i].headPath;
+                    gameSnakes.push(gameSnake);
+                    lenSnake = game.snakes[i].snakeLength - initialSnakeLen;
+                }
+                
                 gameStats.snakes = gameSnakes;
                 gameStats.done = false;
                 gameStats.reward = 0;
+            }
         } else {
             for (var k = 0; k < gameStats.snakes.length; k++) {
                 var i = 0;
@@ -103,7 +110,7 @@
             gameStats.targetPositions = window.targetPositions;
         }
 
-        console.log("Reward", gameStats.reward, "Done", gameStats.done);
+        // console.log("Reward", gameStats.reward, "Done", gameStats.done);
         document.getElementById('gameStats').innerHTML = JSON.stringify(gameStats);
         document.getElementById('score').innerHTML = gameStats && gameStats.snakes && gameStats.snakes.length > 0 ? (gameStats && gameStats.snakes[0].score) : '0';
         document.getElementById('reward').innerHTML = gameStats && gameStats.snakes && gameStats.snakes.length > 0 ? (gameStats && gameStats.snakes[0].reward) : '-1';
