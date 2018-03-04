@@ -37,6 +37,8 @@
         window.targetY = -250;
         var game;
         var gameStats = null;
+        var lenSnake = 0;
+        var initialSnakeLen = 6;
     (function() {
         game = new Phaser.Game(700, 400, Phaser.AUTO, null);
 
@@ -59,17 +61,18 @@
                 gameSnake.angle = game.snakes[i].head.body.angle;
                 gameSnake.x = game.snakes[i].head.body.x;
                 gameSnake.y = game.snakes[i].head.body.y;
-                gameSnake.score = game.snakes[i].snakeLength;
-                gameSnake.length = game.snakes[i].snakeLength;
+                gameSnake.score = game.snakes[i].snakeLength - initialSnakeLen;
+                gameSnake.length = game.snakes[i].snakeLength - initialSnakeLen;
                 gameSnake.reward = 0;
                 gameSnake.isAlive = true;
                 gameSnake.headPath = game.snakes[i].headPath;
                 gameSnakes.push(gameSnake);
+                lenSnake = game.snakes[i].snakeLength - initialSnakeLen;
             }
             
                 gameStats.snakes = gameSnakes;
                 gameStats.done = false;
-                gameStats.reward = game.snakes.length;
+                gameStats.reward = 0;
         } else {
             for (var k = 0; k < gameStats.snakes.length; k++) {
                 var i = 0;
@@ -78,11 +81,12 @@
                         gameStats.snakes[k].angle = game.snakes[i].head.body.angle;
                         gameStats.snakes[k].x = game.snakes[i].head.body.x;
                         gameStats.snakes[k].y = game.snakes[i].head.body.y;
-                        gameStats.snakes[k].score = game.snakes[i].snakeLength;
-                        gameStats.snakes[k].reward = game.snakes[i].snakeLength - gameStats.snakes[k].length;
-                        gameStats.snakes[k].length = game.snakes[i].snakeLength;
+                        gameStats.snakes[k].score = game.snakes[i].snakeLength - initialSnakeLen;
+                        gameStats.snakes[k].reward = game.snakes[i].snakeLength - initialSnakeLen - gameStats.snakes[k].length;
+                        gameStats.snakes[k].length = game.snakes[i].snakeLength - initialSnakeLen;
                         gameStats.snakes[k].isAlive = true;
                         gameStats.snakes[k].headPath = game.snakes[i].headPath;
+                        lenSnake = game.snakes[k].snakeLength - initialSnakeLen;
                         break;
                     }
                 }
@@ -93,13 +97,16 @@
             }
 
             gameStats.done = game.foodCount == 0 || !(gameStats && gameStats.snakes && gameStats.snakes.length > 0 && gameStats.snakes[0].isAlive);
-            gameStats.reward = (game && gameStats.snakes && gameStats.snakes[0]) ? gameStats.snakes[0].reward : 0;
+            gameStats.reward = gameStats.done ? (-20 + lenSnake) : ((game && gameStats.snakes && gameStats.snakes.length > 0) ? gameStats.snakes[0].reward : 0);
+            //if (gameStats.done)
+            //    alert(gameStats.reward);
             gameStats.targetPositions = window.targetPositions;
         }
 
+        console.log("Reward", gameStats.reward, "Done", gameStats.done);
         document.getElementById('gameStats').innerHTML = JSON.stringify(gameStats);
-        document.getElementById('score').innerHTML = gameStats && gameStats.snakes ? (gameStats && gameStats.snakes[0].score) : '0';
-        document.getElementById('reward').innerHTML = gameStats && gameStats.snakes ? (gameStats && gameStats.snakes[0].reward) : '0';
+        document.getElementById('score').innerHTML = gameStats && gameStats.snakes && gameStats.snakes.length > 0 ? (gameStats && gameStats.snakes[0].score) : '0';
+        document.getElementById('reward').innerHTML = gameStats && gameStats.snakes && gameStats.snakes.length > 0 ? (gameStats && gameStats.snakes[0].reward) : '-1';
         //document.getElementById('gamePos').innerHTML = JSON.stringify(gameStats.snakes[0].position) + " rotation: " + JSON.stringify(gameStats.snakes[0].angle) + " input x: " + this.game.input.activePointer.worldX + " input y: " + this.game.input.activePointer.worldY;
     }
 

@@ -20,7 +20,8 @@ Snake = function(game, spriteKey, x, y, id) {
 
     //various quantities that can be changed
     this.scale = 0.6;
-    this.fastSpeed = 200;
+    // this.fastSpeed = 200;
+    this.fastSpeed = 300;
     this.slowSpeed = 130;
     // this.speed = this.slowSpeed;
     this.speed = this.fastSpeed;
@@ -196,9 +197,9 @@ Snake.prototype = {
         //update the eyes and the shadow below the snake
         this.eyes.update();
         this.shadow.update();
-        console.log("Hello");
-        console.log(this.game.height);
-        console.log(this.game.width);
+        //console.log("Hello");
+        //console.log(this.game.height);
+        //console.log(this.game.width);
         if (this.head.body.x < -this.game.width || this.head.body.x > 0 ||
             this.head.body.y < -this.game.height || this.head.body.y > 0) {
                 this.destroy();

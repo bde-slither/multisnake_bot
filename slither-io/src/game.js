@@ -42,7 +42,11 @@ Game.prototype = {
 
         //create player
         // var snake1 = new PlayerSnake(this.game, 'circle', 0, 0);
-        var snake1 = new AiSnake(this.game, 'circle', -400, -250, 0);
+        var startX = 100 + Math.floor(Math.random() * (this.game.width - 200));
+        var startY = 100 + Math.floor(Math.random() * (this.game.height - 200));
+        console.log(startX);
+        console.log(startY);
+        var snake1 = new AiSnake(this.game, 'circle', -startX, -startY, 0);
         //var snake2 = new AiSnake(this.game, 'circle', 300, -100, 1);
         this.game.camera.follow(snake1.head);
 
