@@ -196,6 +196,13 @@ Snake.prototype = {
         //update the eyes and the shadow below the snake
         this.eyes.update();
         this.shadow.update();
+        console.log("Hello");
+        console.log(this.game.height);
+        console.log(this.game.width);
+        if (this.head.body.x < -this.game.width || this.head.body.x > 0 ||
+            this.head.body.y < -this.game.height || this.head.body.y > 0) {
+                this.destroy();
+            }
     },
     /**
      * Find in the headPath array which point the next section of the snake

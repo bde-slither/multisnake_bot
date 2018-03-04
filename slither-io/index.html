@@ -19,9 +19,15 @@
 <body>
     <style>
         
-       #gameStats {
+       #gameStats,
+       #score,
+       #reward {
             display: none;
        }
+
+       /*canvas {
+            border: 5px solid blue;
+       }*/
         
     </style>
     <script>
@@ -32,7 +38,7 @@
         var game;
         var gameStats = null;
     (function() {
-        game = new Phaser.Game(800, 500, Phaser.AUTO, null);
+        game = new Phaser.Game(700, 400, Phaser.AUTO, null);
 
         game.state.add('Game', Game);
         game.state.start('Game');
@@ -86,7 +92,7 @@
                 }
             }
 
-            gameStats.done = game.foodCount == 0;
+            gameStats.done = game.foodCount == 0 || !(gameStats && gameStats.snakes && gameStats.snakes.length > 0 && gameStats.snakes[0].isAlive);
             gameStats.reward = (game && gameStats.snakes && gameStats.snakes[0]) ? gameStats.snakes[0].reward : 0;
             gameStats.targetPositions = window.targetPositions;
         }

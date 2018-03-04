@@ -52,17 +52,6 @@ AiSnake.prototype.update = function() {
         mousePosY = window.targetPositions[this.id][1];
     }
 
-    /*
-    if (mousePosX > 0)
-        mousePosX = 0;
-    if (mousePosY > 0)
-        mousePosY = 0;
-    if (mousePosX < -this.game.width)
-        mousePosX = -this.game.width;
-    if (mousePosY < -this.game.height)
-        mousePosY = -this.game.height;
-    */
-
     var headX = this.head.body.x;
     var headY = this.head.body.y;
     var angle = (180*Math.atan2(mousePosX-headX,mousePosY-headY)/Math.PI);
