@@ -43,8 +43,13 @@ Food.prototype = {
     update: function() {
         //once the food reaches the center of the snake head, destroy it and
         //increment the size of the snake
-        if (this.head && Math.round(this.head.body.x) == Math.round(this.sprite.body.x) &&
+        /*if (this.head && Math.round(this.head.body.x) == Math.round(this.sprite.body.x) &&
         Math.round(this.head.body.y) == Math.round(this.sprite.body.y)) {
+            this.head.snake.incrementSize();
+            this.destroy();
+        }*/
+
+        if (this.head) {
             this.head.snake.incrementSize();
             this.destroy();
         }
