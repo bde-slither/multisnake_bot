@@ -27,7 +27,7 @@ Snake = function(game, spriteKey, x, y, id) {
 
     this.speed = window.snakeSpeed;
     // this.rotationSpeed = 40;
-    this.rotationSpeed = 100;
+    this.rotationSpeed = 250;
 
     //initialize groups and arrays
     this.collisionGroup = this.game.physics.p2.createCollisionGroup();
